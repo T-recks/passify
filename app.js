@@ -37,7 +37,7 @@ const argv = yargs
 let stringLength = argv.length || defaultLength;
 let stringNumber = argv.number || 1;
 
-let message = `Generating ${colors.bold.underline(stringNumber)} string(s) with ${colors.bold.underline(stringLength)} characters`;
+let message = `Generated ${colors.bold.underline(stringNumber)} string(s) with ${colors.bold.underline(stringLength)} characters`;
 
 if (argv.symbols) {
     message += ' and symbols';
@@ -64,9 +64,4 @@ console.log(colors.green(strings[0]), colors.dim(copyMessage));
 
 for (var i = 1; i < stringNumber; i++) {
     console.log(colors.green(strings[i]));
-        // passwords[i] = self.generate(options);
 }
-
-
-
-// console.log(strings[0]);
