@@ -4,8 +4,7 @@ const generator = require('generate-password');
 const yargs = require('yargs');
 const ncp = require('copy-paste');
 const colors = require('colors/safe');
-
-let defaultLength = 20;
+var {settings} = require('./settings');
 
 const argv = yargs
     .options({
@@ -34,10 +33,10 @@ const argv = yargs
     .alias('help', 'h')
     .argv;
 
-let stringLength = argv.length || defaultLength;
-let stringNumber = argv.number || 1;
+var stringLength = argv.length || settings.defaultLength;
+var stringNumber = argv.number || settings.defaultNumber;
 
-let message = `Generated ${colors.bold.underline(stringNumber)} string(s) with ${colors.bold.underline(stringLength)} characters`;
+var message = `Generated ${colors.bold.underline(stringNumber)} string(s) with ${colors.bold.underline(stringLength)} characters`;
 
 if (argv.symbols) {
     message += ' and symbols';
