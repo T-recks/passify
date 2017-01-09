@@ -1,40 +1,17 @@
 #!/usr/bin/env node
 
 const generator = require('generate-password');
-const yargs = require('yargs');
 const ncp = require('copy-paste');
 const colors = require('colors/safe');
-var {settings} = require('./settings');
+const {settings} = require('./settings');
+const argv = require('./arguments').argv;
+const validate = require('./validate');
 
-const argv = yargs
-    .options({
-        length: {
-            alias: 'l',
-            describe: 'specify number of characters per string',
-            number: true
-        },
-        number: {
-            alias: 'n',
-            describe: 'specify number of strings to be generated',
-            number: true
-        },
-        copy: {
-            alias: 'c',
-            describe: 'copy generated string to clipboard \n if generating multiple strings, only the first will be copied',
-            boolean: true
-        },
-        symbols: {
-            alias: 's',
-            describe: 'include symbols in generated string',
-            boolean: true
-        }
-    })
-    .help()
-    .alias('help', 'h')
-    .argv;
+var stringLength = argv.length || settings.defaults.length;
+var stringNumber = argv.number || settings.defaults.number;
+var copyString = argv.copy || settings.defaults.copy;
 
-var stringLength = argv.length || settings.defaultLength;
-var stringNumber = argv.number || settings.defaultNumber;
+validate.validateNumbers([stringLength, stringNumber]);
 
 var message = `Generated ${colors.bold.underline(stringNumber)} string(s) with ${colors.bold.underline(stringLength)} characters`;
 
@@ -52,11 +29,11 @@ var strings = generator.generateMultiple(stringNumber, {
     symbols: argv.symbols
 });
 
-var copyMessage = '';
-
-if (argv.copy) {
-    copyMessage = '(copied to clipboard)';
+if (copyString) {
+    var copyMessage = '(copied to clipboard)';
     ncp.copy(strings[0]);
+} else {
+    var copyMessage = '';
 }
 
 console.log(colors.green(strings[0]), colors.dim(copyMessage));

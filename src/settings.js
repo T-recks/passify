@@ -1,6 +1,13 @@
+/*
+| Default password generation settings
+*/
+
 settings = {
-    defaultLength: 15,
-    defaultNumber: 1
+    defaults: {
+        length: 15,
+        number: 1,
+        copy: false
+    }
 }
 
 module.exports = {settings};
